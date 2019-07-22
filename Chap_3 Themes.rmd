@@ -1,0 +1,151 @@
+---
+title: "Chap_3 Themes"
+author: "teacher"
+date: "July 22, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+require(tidyverse)
+```
+
+## Rectangles
+To understand all the arguments for the themes, you'll modify an existing plot over the next series of exercises.
+
+Here you'll focus on the rectangles of the plotting object z that has already been created for you. If you type z in the console, you can check it out. The goal is to turn z into the plot in the viewer. Do this by following the instructions step by step.
+
+Instructions
+100 XP
+Plot 1: In the theme() function added to z, set the plot.background argument to element_rect(fill = myPink). myPink is already available in the workspace for you.
+Plot 2: Expand your code for Plot 1 by adding a border to the plot.background. Do this by adding 2 arguments to the element_rect() function in theme(): color and size. Set them to "black" and 3, respectively.
+Plot 3: we don't want the plot panels and legend to appear as they are in Plot 2. A short cut is to remove all rectangles, as defined in the theme object no_panels, and then draw the one we way in the way we want. Copy your theme() layer from Plot 2 and add it to no_panels.
+
+#### Hint
+
+Hint
+For the second plot, the plot.background argument inside theme() should be set to element_rect(fill = myPink, color = "black", size = 3).
+To remove the unwanted backgrounds, add the predefined theme, uniform_panels to the third plot.
+
+```{r }
+#need to figure out how to put z in here
+z <- ggplot(mtcars,aes(x=wt,y=mpg, col=cyl))
+myPink <- c("#99000D")
+# Starting point
+z + geom_point()
+
+# Plot 1: Change the plot background fill to myPink
+z + 
+  theme(plot.background = element_rect(fill = myPink))
+
+# Plot 2: Adjust the border to be a black line of size 3
+z + 
+  theme(plot.background = element_rect(fill = myPink, color = "black", size = 3)) # expanded from plot 1
+
+# Theme to remove all rectangles
+no_panels <- theme(rect = element_blank())
+
+# Plot 3: Combine custom themes
+z +
+  no_panels +
+  theme(plot.background = element_rect(fill = myPink, color = "black", size = 3))  # from plot 2
+```
+
+## Lines
+To change the appearance of lines use the element_line() function.
+
+The plot you created in the last exercise, with the fancy pink background, is available as the plotting object z. Your goal is to produce the plot in the viewer - no grid lines, but red axes and tick marks.
+
+For each of the arguments that specify lines, use element_line() to modify attributes. e.g. element_line(color = "red").
+
+Remember, to remove a non-data element, use element_blank().
+
+Instructions
+100 XP
+Starting with object z, add a theme() function to:
+
+remove the grid lines using the panel.grid argument.
+add red axis lines using the axis.line argument.
+change the tick marks to red using the axis.ticks argument, similar to how you specified axis.line.
+
+#### Hint
+
+Hint
+Set panel.grid = element_blank().
+Set both axis.line and axis.ticks to element_line(color = "red").
+
+```{r }
+# Extend z with theme() function and 3 args
+z + 
+  theme(panel.grid = element_blank(),
+        axis.line = element_line(color = "red"),
+        axis.ticks = element_line(color = "red"))
+```
+
+## Text
+Next we can make the text on your plot prettier and easier to spot. You can do this through the element_text() function and by passing the appropriate arguments inside the theme() function.
+
+As before, the plot you've created in the previous exercise is available as z. The plot you should end up with after successfully completing this exercises is shown in the viewer.
+
+Instructions
+100 XP
+Starting from z, add a theme() function to:
+
+Change the appearance of the strip text, that is the text in the facet strips. Specify strip.text with element_text(). The size of the text should be 16, the color should be myRed, a color that is predefined for you.
+Change the axis titles. Specify both axes with the axis.title argument and use element_text() to set the parameters: color = myRed, hjust = 0 (to put the text in the bottom left corner) and face = "italic".
+Make the axis text black using the axis.text argument to do so.
+
+#### Hint
+
+Hint
+Use element_text(size = ___, color = ___) to specify strip.text.
+Use element_text(color = ___, hjust = ___, face = ___) to specify axis.title. Fill in the blanks!
+Use element_text(color = ___) to specify axis.text.
+
+```{r }
+# Original plot, color provided
+z
+myRed <- myPink
+
+# Extend z with theme() function and 3 args
+z +
+  theme(strip.text = element_text(size = 16, color = myRed),
+        axis.title = element_text(color = myRed, hjust = 0, face = "italic"),
+        axis.text = element_text(color = "black"))
+```
+
+## Legends
+The themes layer also allows you to specify the appearance and location of legends.
+
+The plot you've coded up to now is available as z. It's also displayed in the viewer. Solve the instructions and compare the resulting plots with the plot you started with.
+
+Instructions
+100 XP
+Add a theme() function to z to change the legend's location. Do this by specifying the legend.position argument to be c(0.85, 0.85). This will make the legend appear in the top right of the plot, inside the third facet.
+Instead of a vertical list of legend entries, you might want to have the different entries next to each other. Starting from z, add a theme() function in which you specify legend.direction to be "horizontal".
+You can also change the locations of legends by name: set legend.position to "bottom".
+Finally, you can remove the legend entirely, by setting legend.position to "none".
+
+#### Hint
+
+Hint
+Follow the instructions closely. Each time, you should simply add one theme() function with a single argument to z. The instructions are not incremental here.
+
+```{r}
+# Move legend by position
+z +
+  theme(legend.position = c(0.85, 0.85))
+
+# Change direction
+z +
+  theme(legend.direction = "horizontal")
+
+# Change location by name
+z +
+  theme(legend.position = "bottom")
+
+# Remove legend entirely
+z +
+  theme(legend.position = "none")
+```
+
